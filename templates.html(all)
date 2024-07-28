@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register Student</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}">
+</head>
+<body>
+    <h2>Student Registration</h2>
+    <form method = 'post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Enroll student</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}">
+</head>
+<body>
+    <h2>Enroll Student</h2>
+    <form method = 'post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enroll</button>
+    </form>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Enrollment List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}">
+</head>
+<body>
+    <h2>Enrollment student</h2>
+    <ul>
+        {% for enrollment in enrollments %}
+            <li>{{ enrollment.student.first_name }} enrolled in {{ enrollment.course.name }} on {{ enrollment.date_enrolled }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register Student</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}">
+</head>
+<body>
+    <h2>Add Project</h2>
+    <form method = 'post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">save</button>
+    </form>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Projects List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}">
+</head>
+<body>
+    <h2>Projects student</h2>
+    <ul>
+        {% for project in projects %}
+        <li>{{ project.student.first_name }} {{ project.student.last_name }}: {{ project.topic }} - {{ project.languages_used }} ({{ project.duration }} weeks)</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Student List</h1>
+        <a href="{% url 'export_students_csv' %}">Export as CSV</a> |
+        <a href="{% url 'export_students_pdf' %}">Export as PDF</a>
+        <ul>
+            {% for student in students %}
+            <li><a href="{% url 'student_detail' student.pk %}">{{ student.first_name }} {{ student.last_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+
+
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Student Detail</title> 
+    {% load static %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'program5/styles.css' %}"> 
+</head> 
+<body> 
+    <div class="container"> 
+        <h1>{{ student.first_name }} {{ student.last_name }}</h1> 
+        <p><strong>Email:</strong> {{ student.email }}</p> 
+        <h2>Enrolled Courses</h2> 
+        <ul> 
+            {% for enrollment in student.enrollment_set.all %} 
+                <li>{{ enrollment.course.name }} - {{ enrollment.date_enrolled }}</li> 
+            {% endfor %} 
+        </ul> 
+        <h2>Project</h2> 
+        {% if student.project %} 
+            <p><strong>Topic:</strong> {{ student.project.topic }}</p> 
+            <p><strong>Languages Used:</strong> {{ student.project.languages_used }}</p> 
+            <p><strong>Duration:</strong> {{ student.project.duration }} 
+weeks</p> 
+        {% else %} 
+            <p>No project assigned.</p> 
+        {% endif %} 
+    </div> 
+</body> 
+</html> 
